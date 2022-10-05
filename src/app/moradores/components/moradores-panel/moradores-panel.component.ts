@@ -19,6 +19,10 @@ const EXCEL_EXTENSION = '.xlsx';
 })
 export class MoradoresPanelComponent implements OnInit {
 
+  fileForm = this.form.group({
+    file: ['',Validators.required],
+  })
+
   constructor(
     private service: MoradoresService,
     private form: FormBuilder,
@@ -192,6 +196,35 @@ export class MoradoresPanelComponent implements OnInit {
     fs.saveAs(
       data,
       fileName + EXCEL_EXTENSION
+    );
+  }
+
+  file: any;
+
+  loadFile(event: any){
+    if(event.target.files && event.target.files[0]){
+      this.file =event.target.files[0];
+      this.fileForm.patchValue({
+        file: this.file.name
+      })
+    }
+  }
+
+  importFile(){
+    this.fileForm.reset();
+    this.service.importMorador(this.file).subscribe(
+      (success)=>{
+        this.file = null;
+        this.okDialog('Importação concluída!');
+        this.ngOnInit();
+      },
+      (error)=>{
+        if(error.error.status===400){
+          this.okDialog("Falha")
+        }
+        this.file =null;
+        this.ngOnInit();
+      },()=>{}
     );
   }
 }

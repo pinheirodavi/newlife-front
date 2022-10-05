@@ -46,4 +46,10 @@ export class MoradoresService {
   delete (id: number) {
     return this.http.delete<any>(`${environment.apiUrl}/moradores/${id}`);
   }
+
+  importMorador(file: any){
+    const formData = new FormData();
+    formData.append('file',file);
+    return this.http.post(`${environment.apiUrl}/moradores/import`,formData);
+  }
 }

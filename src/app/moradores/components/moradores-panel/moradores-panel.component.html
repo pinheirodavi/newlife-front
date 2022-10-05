@@ -14,6 +14,41 @@
         </mat-form-field>
 
         <div class="botoes">
+          <form [formGroup]="fileForm">
+            <div style="display: flex">
+              <div style="width: 100%; padding-right: 15px">
+                <mat-form-field appearance="outline" style="width: 100%">
+                  <mat-label> File </mat-label>
+                  <input
+                    matInput
+                    formControlName="file"
+                    (click)="fileInput.click()"
+                    readonly="true"
+                  />
+                  <mat-icon matSuffix (click)="fileInput.click()"
+                    >attach_file</mat-icon
+                  >
+                </mat-form-field>
+                <input
+                  type="file"
+                  accept=".xlsx"
+                  (change)="loadFile($event)"
+                  #fileInput
+                  hidden
+                />
+              </div>
+                <button
+                  mat-raised-button
+                  [disabled]="!file"
+                  (click)="importFile()"
+                  color="primary"
+                  mat-raised-button
+                  style="width: 100px;"
+                >
+                  Upload
+                </button>
+            </div>
+          </form>
           <button
             mat-raised-button
             color="primary"

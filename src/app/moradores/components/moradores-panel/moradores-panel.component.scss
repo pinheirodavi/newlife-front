@@ -14,6 +14,7 @@ mat-card-title {
 .search {
   display: flex;
   justify-content: space-between;
+  max-height: 80px;
 }
 
 .search mat-form-field {
@@ -25,6 +26,11 @@ mat-card-title {
   gap: 15px;
   margin-bottom: 20px;
 }
+
+button{
+  max-height: 50px;
+}
+
 
 
 .btnAdicionar:hover {
