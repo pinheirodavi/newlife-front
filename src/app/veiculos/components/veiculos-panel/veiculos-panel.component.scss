@@ -1,0 +1,112 @@
+@import "../../../../variables.scss";
+
+mat-card {
+  margin: 5px 5px;
+}
+
+mat-card-title {
+  font-size: 30px;
+  color: $primary;
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.search {
+  display: inline;
+}
+
+.search mat-form-field {
+  width: 40%;
+}
+
+.btnAdicionar {
+  float: right;
+  margin-right: 10 px;
+  padding: 7.5px 20px;
+}
+
+.btnAdicionar:hover {
+  background-color: #d13673;
+}
+
+.tableForm {
+  margin: 0 auto;
+}
+
+table {
+  width: 100%;
+  padding: 0;
+}
+
+th.mat-header-cell:first-of-type,
+td.mat-cell:first-of-type,
+td.mat-footer-cell:first-of-type {
+  padding-left: 0px;
+}
+
+th.mat-header-cell:last-of-type,
+td.mat-cell:last-of-type,
+td.mat-footer-cell:last-of-type {
+  padding-right: 0px;
+}
+
+.mat-paginator {
+  display: flex;
+  justify-content: center;
+}
+
+tr:hover {
+  background-color: #fff3f3;
+}
+
+tr td:nth-child(odd):hover {
+  background-color: #fff3f3;
+}
+
+td:nth-child(even) {
+  background-color: #fff3f3;
+}
+
+td {
+  text-align: center;
+  font-size: 13px;
+}
+
+th {
+  background-color: $primary;
+  color: #f5f5f5;
+  text-align: center;
+}
+
+th.mat-header-cell {
+  text-align: center;
+  font-size: 14px;
+}
+
+.colApto {
+  width: 10%;
+}
+
+.colPlaca {
+  width: 20%;
+}
+
+.colMarca {
+  width: 20%;
+}
+
+.colModelo {
+  width: 20%;
+}
+
+.colCor {
+  width: 20%;
+}
+
+.colAction {
+  width: 10%;
+}
+
+.paginator {
+  margin-top: 20px;
+}

@@ -1,0 +1,57 @@
+<form [formGroup]="visitantesForm">
+  <mat-card>
+    <mat-card-title> {{ (isEdit?'Atualizar Visitante':'Cadastrar Visitante') }}</mat-card-title>
+
+    <mat-form-field appearance="outline" class="inputApto">
+      <mat-label>Apto</mat-label>
+        <mat-select disableOptionCentering formControlName="idApto" [disabled]="isEdit">
+          <mat-option *ngFor="let apartamentos of aptoList" [value]="apartamentos.idApto">
+            {{ apartamentos.numApto }}
+          </mat-option>
+        </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="inputNome">
+      <mat-label> Nome </mat-label>
+      <input matInput type="text" formControlName="nome" />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="inputRG">
+      <mat-label> RG </mat-label>
+      <input matInput type="text" formControlName="rg" mask="00.000.000-0"/>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="inputCPF">
+      <mat-label> CPF </mat-label>
+      <input matInput type="text" formControlName="cpf" mask="000.000.000-00"/>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="inputTel1">
+      <mat-label> Tel. 1 </mat-label>
+      <input matInput type="text" formControlName="tel1" mask="(00)00000-0000"/>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="inputTel2">
+      <mat-label> Tel. 2 </mat-label>
+      <input matInput type="text" formControlName="tel2" mask="(00)00000-0000"/>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="inputObs">
+      <mat-label> Observações </mat-label>
+      <textarea matInput formControlName="obs" rows="1.5;"></textarea>
+    </mat-form-field>
+
+    <div class = "buttons">
+      <button mat-raised-button type = "reset" color="primary"> Limpar </button>
+      <button
+        mat-raised-button
+        color="primary"
+        (click)="!isEdit ? create() : update()"
+        [disabled]="!visitantesForm.valid"
+        class="btnSalvar"
+      >
+        {{ (isEdit?'Atualizar':'Salvar') }}
+      </button>
+    </div>
+  </mat-card>
+  </form>

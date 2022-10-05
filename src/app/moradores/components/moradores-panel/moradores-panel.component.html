@@ -1,0 +1,162 @@
+<div class="page-container">
+  <mat-card>
+    <mat-card-title>Moradores</mat-card-title>
+    <mat-card-content>
+      <div class="search">
+        <mat-form-field fxFill appearance="outline">
+          <mat-label>Pesquisar</mat-label>
+          <input
+            matInput
+            type="text"
+            [formControl]="filterControl"
+            class="inputPesquisar"
+          />
+        </mat-form-field>
+
+        <div class="botoes">
+          <button
+            mat-raised-button
+            color="primary"
+            class="btnAdicionar"
+            (click)="exportExcel()"
+          >
+            Exportar <mat-icon>download</mat-icon>
+          </button>
+
+          <button
+            mat-raised-button
+            color="primary"
+            class="btnAdicionar"
+            routerLink="new"
+          >
+            Adicionar Novo Morador
+          </button>
+        </div>
+      </div>
+
+      <div class="tableForm">
+        <table
+          mat-table
+          [dataSource]="dataTable"
+          aria-describedby="Lista de moradores"
+          class="mat-elevation-z8"
+        >
+          <ng-container matColumnDef="numApto">
+            <th mat-header-cell *matHeaderCellDef class="colApto">
+              <span class="table-header"> Apto. </span>
+            </th>
+            <td mat-cell *matCellDef="let element">
+              {{ element.idApto.numApto }}
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="nome">
+            <th mat-header-cell *matHeaderCellDef class="colNome">
+              <span class="table-header"> Nome </span>
+            </th>
+            <td mat-cell *matCellDef="let element">{{ element.nome }}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="rg">
+            <th mat-header-cell *matHeaderCellDef class="colRG">
+              <span class="table-header"> RG </span>
+            </th>
+            <td mat-cell *matCellDef="let element">{{ element.rg | rg }}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="cpf">
+            <th mat-header-cell *matHeaderCellDef class="colCPF">
+              <span class="table-header"> CPF </span>
+            </th>
+            <td mat-cell *matCellDef="let element">{{ element.cpf | cpf }}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="tel1" class="colTel1">
+            <th mat-header-cell *matHeaderCellDef>
+              <span class="table-header"> Tel. 1 </span>
+            </th>
+            <td mat-cell *matCellDef="let element">
+              {{ element.tel1 | telefone }}
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="tel2">
+            <th mat-header-cell *matHeaderCellDef class="colTel2">
+              <span class="table-header"> Tel. 2 </span>
+            </th>
+            <td mat-cell *matCellDef="let element">
+              {{ element.tel2 | telefone }}
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="email">
+            <th mat-header-cell *matHeaderCellDef class="colEmail">
+              <span class="table-header"> Email </span>
+            </th>
+            <td mat-cell *matCellDef="let element">{{ element.email }}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="contatoEmergencia">
+            <th mat-header-cell *matHeaderCellDef class="colContatoEmergencia">
+              <span class="table-header"> Contato Emergência </span>
+            </th>
+            <td mat-cell *matCellDef="let element">
+              {{ element.contatoEmergencia | texto }}
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="telEmergencia">
+            <th mat-header-cell *matHeaderCellDef class="colTelEmergencia">
+              <span class="table-header"> Tel. Emergência </span>
+            </th>
+            <td mat-cell *matCellDef="let element">
+              {{ element.telEmergencia | telefone }}
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="obs">
+            <th mat-header-cell *matHeaderCellDef class="colObs">
+              <span class="table-header"> Observações </span>
+            </th>
+            <td mat-cell *matCellDef="let element">
+              {{ element.obs | texto }}
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="action">
+            <th mat-header-cell *matHeaderCellDef class="colAction">
+              <span class="table-header">Ação</span>
+            </th>
+            <td mat-cell *matCellDef="let element">
+              <button
+                mat-icon-button
+                color="warn"
+                (click)="openDialog(element.idMorador)"
+              >
+                <mat-icon>delete</mat-icon>
+              </button>
+
+              <button mat-icon-button [routerLink]="element.idMorador">
+                <mat-icon>edit</mat-icon>
+              </button>
+            </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+        </table>
+
+        <div class="paginator">
+          <mat-paginator
+            [length]="totalLength"
+            [pageSize]="pageSize"
+            [pageSizeOptions]="[5, 10, 15, 20]"
+            (page)="pageChange($event)"
+            showFirstLastButtons
+          >
+          </mat-paginator>
+        </div>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>

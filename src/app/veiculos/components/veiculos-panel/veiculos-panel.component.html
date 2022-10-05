@@ -1,0 +1,108 @@
+<div class="page-container">
+  <mat-card>
+    <mat-card-title>Veículos</mat-card-title>
+    <mat-card-content>
+      <div class="search">
+        <mat-form-field fxFill appearance="outline">
+          <mat-label>Pesquisar</mat-label>
+          <input
+            matInput
+            type="text"
+            [formControl]="filterControl"
+            class="inputPesquisar"
+          />
+        </mat-form-field>
+      </div>
+
+      <button
+        mat-raised-button
+        color="primary"
+        class="btnAdicionar"
+        routerLink="new"
+      >
+        Adicionar Novo Morador
+      </button>
+
+      <div class="tableForm">
+        <table
+          mat-table
+          [dataSource]="dataTable"
+          aria-describedby="Lista de veículos"
+          class="mat-elevation-z8"
+        >
+          <ng-container matColumnDef="numApto">
+            <th mat-header-cell *matHeaderCellDef class="colApto">
+              <span class="table-header"> Apto. </span>
+            </th>
+            <td mat-cell *matCellDef="let element">
+              {{ element.idApto.numApto }}
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="placa">
+            <th mat-header-cell *matHeaderCellDef class="colPlaca">
+              <span class="table-header"> Placa </span>
+            </th>
+            <td mat-cell *matCellDef="let element">{{ element.placa }}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="marca">
+            <th mat-header-cell *matHeaderCellDef class="colMarca">
+              <span class="table-header"> Marca </span>
+            </th>
+            <td mat-cell *matCellDef="let element">{{ element.marca }}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="modelo">
+            <th mat-header-cell *matHeaderCellDef class="colModelo">
+              <span class="table-header"> Modelo </span>
+            </th>
+            <td mat-cell *matCellDef="let element">{{ element.modelo }}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="cor" class="colCor">
+            <th mat-header-cell *matHeaderCellDef>
+              <span class="table-header"> Cor </span>
+            </th>
+            <td mat-cell *matCellDef="let element">
+              {{ element.cor }}
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="action">
+            <th mat-header-cell *matHeaderCellDef class="colAction">
+              <span class="table-header">Ação</span>
+            </th>
+            <td mat-cell *matCellDef="let element">
+              <button
+                mat-icon-button
+                color="warn"
+                (click)="openDialog(element.idVeiculo)"
+              >
+                <mat-icon>delete</mat-icon>
+              </button>
+
+              <button mat-icon-button [routerLink]="element.idVeiculo">
+                <mat-icon>edit</mat-icon>
+              </button>
+            </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+        </table>
+
+        <div class="paginator">
+          <mat-paginator
+            [length]="totalLength"
+            [pageSize]="pageSize"
+            [pageSizeOptions]="[5, 10, 15, 20]"
+            (page)="pageChange($event)"
+            showFirstLastButtons
+          >
+          </mat-paginator>
+        </div>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>

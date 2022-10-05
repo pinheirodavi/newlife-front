@@ -1,0 +1,47 @@
+<form [formGroup]="veiculosForm">
+  <mat-card>
+    <mat-card-title> {{ (isEdit?'Atualizar Veículo':'Cadastrar Veículo') }}</mat-card-title>
+
+    <mat-form-field appearance="outline" class="inputApto">
+      <mat-label>Apto</mat-label>
+        <mat-select disableOptionCentering formControlName="idApto" [disabled]="isEdit">
+          <mat-option *ngFor="let apartamentos of aptoList" [value]="apartamentos.idApto">
+            {{ apartamentos.numApto }}
+          </mat-option>
+        </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="inputPlaca">
+      <mat-label> Placa </mat-label>
+      <input matInput type="text" formControlName="placa" />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="inputMarca">
+      <mat-label> Marca </mat-label>
+      <input matInput type="text" formControlName="marca" />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="inputModelo">
+      <mat-label> Modelo </mat-label>
+      <input matInput type="text" formControlName="modelo" />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="inputCor">
+      <mat-label> Cor </mat-label>
+      <input matInput type="text" formControlName="cor" />
+    </mat-form-field>
+
+    <div class = "buttons">
+      <button mat-raised-button type = "reset" color="primary"> Limpar </button>
+      <button
+        mat-raised-button
+        color="primary"
+        (click)="!isEdit ? create() : update()"
+        [disabled]="!veiculosForm.valid"
+        class="btnSalvar"
+      >
+        {{ (isEdit?'Atualizar':'Salvar') }}
+      </button>
+    </div>
+  </mat-card>
+  </form>

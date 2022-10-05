@@ -1,0 +1,68 @@
+@import "../../../../variables.scss";
+
+mat-card {
+  width: 80%;
+  margin-top: 20px;
+  margin: 20px auto;
+  background-color: #f9f9f9;
+}
+
+mat-card-title {
+  color: $primary;
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+mat-form-field {
+  padding-right: 7px;
+}
+
+.inputApto {
+  width: 7%;
+}
+
+.inputNome {
+  width: 50%;
+}
+
+.inputRG {
+  width: 20.2%;
+}
+
+.inputCPF {
+  width: 20.2%;
+}
+
+.inputTel1 {
+  width: 28.5%;
+}
+
+.inputTel2 {
+  width: 28.5%;
+}
+
+.inputEmail {
+  width: 41%;
+}
+
+.inputContatoEmergencia {
+  width: 28.5%;
+}
+
+.inputTelEmergencia {
+  width: 28.5%;
+}
+
+.inputObs {
+  width: 41%;
+}
+
+.btnSalvar {
+  margin-left: 10px;
+}
+
+.buttons {
+  margin-right: 8px;
+  display: flex;
+  justify-content: end;
+}
