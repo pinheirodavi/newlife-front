@@ -2,7 +2,7 @@ import { OkDialogComponent } from './../../../shared/components/ok-dialog/ok-dia
 import { ConfirmationDialogComponent } from './../../../shared/components/confirmation-dialog/confirmation-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
 import { PageEvent } from '@angular/material/paginator';
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Validators, FormBuilder, FormControl } from '@angular/forms';
 import { MatTableDataSource } from '@angular/material/table';
 import { MoradoresService } from '../../service/moradores.service';
@@ -19,8 +19,14 @@ const EXCEL_EXTENSION = '.xlsx';
 })
 export class MoradoresPanelComponent implements OnInit {
 
+  @ViewChild('fileInput')
+  fileInput!: ElementRef;
+  resetFileUploader() {
+    this.fileInput.nativeElement.value = null;
+  }
+
   fileForm = this.form.group({
-    file: ['',Validators.required],
+    file: ['', Validators.required],
   })
 
   constructor(
@@ -115,23 +121,23 @@ export class MoradoresPanelComponent implements OnInit {
     )
   }
 
-  downloadAllRequests(query?: string | null){
-    this.service.findAllList(query).subscribe( response => {
+  downloadAllRequests(query?: string | null) {
+    this.service.findAllList(query).subscribe(response => {
       import("xlsx").then(xlsx => {
-        const header:any[][] = [[
-            'Apto',
-            'Morador',
-            'RG',
-            'CPF',
-            'Tel. 1',
-            'Tel. 2',
-            'Èmail',
-            'Contato Emergencia',
-            'Tel. Emergência',
-            'Obs.',
+        const header: any[][] = [[
+          'Apto',
+          'Morador',
+          'RG',
+          'CPF',
+          'Tel. 1',
+          'Tel. 2',
+          'Èmail',
+          'Contato Emergencia',
+          'Tel. Emergência',
+          'Obs.',
         ]];
         let ws: any = xlsx.utils.book_new();
-        xlsx.utils.sheet_add_aoa(ws,header);
+        xlsx.utils.sheet_add_aoa(ws, header);
         xlsx.utils.sheet_add_json(
           ws,
           response,
@@ -147,9 +153,10 @@ export class MoradoresPanelComponent implements OnInit {
               'contatoEmergencia',
               'telEmergencia',
               'obs',
-            ],skipHeader: true,origin: 'A2'});
+            ], skipHeader: true, origin: 'A2'
+          });
         const workbook = { Sheets: { 'data': ws }, SheetNames: ['data'] };
-        ws['!cols'] = [{wpx: 100},{wpx: 100},{wpx: 100},{wpx: 100},{wpx: 100},{wpx: 100},{wpx: 100},{wpx: 100},{wpx: 100},{wpx: 100}]
+        ws['!cols'] = [{ wpx: 100 }, { wpx: 100 }, { wpx: 100 }, { wpx: 100 }, { wpx: 100 }, { wpx: 100 }, { wpx: 100 }, { wpx: 100 }, { wpx: 100 }, { wpx: 100 }]
         const excelBuffer: any = xlsx.write(workbook, { bookType: 'xlsx', type: 'array' });
         this.saveAsExcelFile(excelBuffer, "newlife-moradores");
       });
@@ -181,13 +188,13 @@ export class MoradoresPanelComponent implements OnInit {
   //   });
   // }
 
-  exportExcel(){
-    if(this.filterControl.value != ''){
-       this.downloadAllRequests(this.filterControl.value);
-    } else{
-       this.downloadAllRequests();
+  exportExcel() {
+    if (this.filterControl.value != '') {
+      this.downloadAllRequests(this.filterControl.value);
+    } else {
+      this.downloadAllRequests();
     }
-}
+  }
 
   saveAsExcelFile(buffer: any, fileName: string): void {
     const data: Blob = new Blob([buffer], {
@@ -201,30 +208,36 @@ export class MoradoresPanelComponent implements OnInit {
 
   file: any;
 
-  loadFile(event: any){
-    if(event.target.files && event.target.files[0]){
-      this.file =event.target.files[0];
+  loadFile(event: any) {
+    if (event.target.files && event.target.files[0]) {
+      this.file = event.target.files[0];
       this.fileForm.patchValue({
         file: this.file.name
       })
     }
   }
 
-  importFile(){
+  importFile() {
     this.fileForm.reset();
     this.service.importMorador(this.file).subscribe(
-      (success)=>{
+      (success) => {
         this.file = null;
         this.okDialog('Importação concluída!');
         this.ngOnInit();
       },
-      (error)=>{
-        if(error.error.status===400){
-          this.okDialog("Falha")
+      (error) => {
+        if (error.status === 400) {
+          this.okDialog(error.error.message)
         }
-        this.file =null;
+        if (error.status === 428) {
+          this.okDialog(error.error.message)
+        }
+        this.file = null;
         this.ngOnInit();
-      },()=>{}
+
+      },
+      () => { }
     );
+    this.resetFileUploader();
   }
 }
